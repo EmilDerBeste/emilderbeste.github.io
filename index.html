@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quiz</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="quiz">
+
+    </div>
+    <button id="submit">OK</button>
+    <script>
+        const quizDiv = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        let number = 0;
+        const questions = [{
+            question: "Welches der Jahre ist ein Schaltjahr?",
+            answers: {
+                a: "1343",
+                b: "1344",
+                c: "1345",
+                d: "1346"
+            },
+            correct: "b"
+        }, 
+        {
+            question: "Welches der Jahre ist kein Schaltjahr?",
+            answers: {
+                a: "1300",
+                b: "1350",
+                c: "1400",
+                d: "2020"
+            },
+            correct: "b"
+        }, 
+        {
+            question: "Wer ist am coolsten?",
+            answers: {
+                a: "Emil",
+                b: "Matteo",
+                c: "Papa",
+                d: "Judith"
+            },
+            correct: "c"
+        }, 
+        ];
+        function sleep(milliseconds) {
+            const date = Date.now();
+            let currentDate = null;
+            do {
+                currentDate = Date.now();
+            } while (currentDate - date < milliseconds);
+        }
+        function buildQuiz(){
+            const output = [];
+            const q = questions[number];
+            output.push(`<h3>${q.question}</h3>`)
+            output.push(`<label><input type="radio" name=${number} value=${q.answers.a} />${q.answers.a}</label><br/>`);
+            output.push(`<label><input type="radio" name=${number} value=${q.answers.b} />${q.answers.b}</label><br/>`);
+            output.push(`<label><input type="radio" name=${number} value=${q.answers.c} />${q.answers.c}</label><br/>`);
+            output.push(`<label><input type="radio" name=${number} value=${q.answers.d} />${q.answers.d}</label><br/>`);
+            quizDiv.innerHTML = output.join('');
+        }
+        function showResults(){
+            var answers = document.getElementsByName(number);
+            var guessed = null;
+            const q = questions[number];
+            for(i = 0; i < answers.length; i++){ 
+                  
+                if(answers[i].type="radio"){ 
+                    
+                    if(answers[i].checked){
+                        guessed = answers[i].value;
+                    } 
+                          
+                } 
+            } 
+            if(guessed == q.answers[q.correct]){
+                alert("Ihre Antwort war richtig!");
+            }
+            else{
+                alert(`Ihre Antwort war falsch. Richtig war ${q.answers[q.correct]}!`);
+            }
+            number++;
+            buildQuiz();
+        }
+        buildQuiz();
+        submitButton.addEventListener('click', showResults);
+
+    </script>
+</body>
+</html>
